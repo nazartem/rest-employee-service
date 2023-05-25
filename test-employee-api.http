@@ -3,9 +3,9 @@
 GET http://localhost:8080/employee
 Content-Type: application/json
 
-### Get employee by id
+### Get employee by companyID
 
-GET http://localhost:1234/employee/1
+GET http://localhost:8080/company/3/
 Content-Type: application/json
 
 ### Create employee
@@ -14,17 +14,17 @@ POST http://localhost:8080/employee
 Content-Type: application/json
 
 {
-  "name":"Игорь",
-  "surname":"Игнатов",
-  "phone":"+512345",
-  "companyID":1,
+  "name":"E",
+  "surname":"EE",
+  "phone":"555",
+  "companyID":2,
   "passport": {
     "type":"multi",
-    "number":"61234"
+    "number":"5555"
   },
   "department": {
     "name":"Отдел №33",
-    "phone":"22-52"
+    "phone":"2256"
   }
 }
 
@@ -52,7 +52,7 @@ client.test("Request executed successfully", function() {
 
 ### Delete employee
 
-DELETE http://localhost:8080/employee/6/
+DELETE http://localhost:8080/employee/2/
 Content-Type: application/json
 
 > {%

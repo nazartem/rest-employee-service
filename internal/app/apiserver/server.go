@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -36,7 +35,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s *server) configureRouter() {
 	s.router.HandleFunc("/employee", s.handleEmployeeCreate()).Methods("POST")
-	//s.router.HandleFunc("/company/{id:[0-9]+}/", s.handleEmployeesByCompany()).Methods("GET")
+	s.router.HandleFunc("/company/{id:[0-9]+}/", s.handleEmployeesByCompany()).Methods("GET")
 	//s.router.HandleFunc("/department/{id:[0-9]+}/", s.handleEmployeesByDepartment()).Methods("GET")
 	s.router.HandleFunc("/employee/{id:[0-9]+}/", s.handlerEmployeeDelete()).Methods("DELETE")
 	//s.router.HandleFunc("/employee/{id:[0-9]+}/", s.handleEmployeeUpdate()).Methods("PATCH")
@@ -91,7 +90,7 @@ func (s *server) handleEmployeeCreate() http.HandlerFunc {
 
 func (s *server) handlerEmployeeDelete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("handling delete employee at %s\n", r.URL.Path)
+		s.logger.Printf("handling delete employee at %s\n", r.URL.Path)
 
 		id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
@@ -104,19 +103,26 @@ func (s *server) handlerEmployeeDelete() http.HandlerFunc {
 	}
 }
 
-//func (es *employeeServer) lastNameHandler(w http.ResponseWriter, req *http.Request) {
-//	log.Printf("handling employee by lastName at %s\n", req.URL.Path)
-//
-//	lastName := mux.Vars(req)["lastName"]
-//	employees, err := es.storage.GetEmployeesByLastName(lastName)
-//
-//	if err != nil {
-//		http.Error(w, err.Error(), http.StatusNotFound)
-//		return
-//	}
-//
-//	renderJSON(w, employees)
-//}
+func (s *server) handleEmployeesByCompany() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		s.logger.Printf("handling employee by companyID at %s\n", r.URL.Path)
+
+		companyID, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+		employees, err := s.store.Employee().FindByCompany(companyID)
+		if err != nil {
+			s.error(w, r, http.StatusNotFound, err)
+			return
+		}
+
+		if len(employees) == 0 {
+			s.respond(w, r, http.StatusNotFound, nil)
+			return
+		}
+
+		s.respond(w, r, http.StatusOK, employees)
+	}
+}
 
 //func (es *employeeServer) updateEmployeeHandler(w http.ResponseWriter, req *http.Request) {
 //	log.Printf("handling employee update at %s\n", req.URL.Path)
