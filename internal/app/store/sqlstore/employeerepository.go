@@ -12,6 +12,10 @@ type EmployeeRepository struct {
 }
 
 func (r *EmployeeRepository) Create(e *model.Employee) error {
+	if err := e.Validate(); err != nil {
+		return err
+	}
+
 	var passportId, departmentId int
 
 	// Поиск Id паспорта в таблице passports

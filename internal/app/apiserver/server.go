@@ -100,7 +100,7 @@ func (s *server) handlerEmployeeDelete() http.HandlerFunc {
 			return
 		}
 
-		s.respond(w, r, http.StatusOK, nil)
+		s.respond(w, r, http.StatusNoContent, nil)
 	}
 }
 

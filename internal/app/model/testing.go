@@ -16,7 +16,7 @@ func TestEmployee(t *testing.T) *Employee {
 	return &Employee{
 		Name:      "Корбен",
 		Surname:   "Даллас",
-		Phone:     "+1234567",
+		Phone:     "1234567",
 		CompanyID: 1,
 		Passport: struct {
 			Type   string
@@ -25,7 +25,7 @@ func TestEmployee(t *testing.T) *Employee {
 		Department: struct {
 			Name  string
 			Phone string
-		}{Name: "Отдел №33", Phone: "65-65-65"},
+		}{Name: "Отдел №33", Phone: "656565"},
 	}
 }
 
