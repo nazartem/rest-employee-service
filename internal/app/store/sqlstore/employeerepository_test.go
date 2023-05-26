@@ -7,9 +7,11 @@ import (
 	"testing"
 )
 
+// Перед выполнением тестов нужно заполнить таблицу companies значениями
+
 func TestEmployeeRepository_Create(t *testing.T) {
 	db, teardown := sqlstore.TestDB(t, databaseURL)
-	defer teardown("companies", "departments", "employees", "passports")
+	defer teardown("companies", "departments", "employees")
 
 	s := sqlstore.New(db)
 	e := model.TestEmployee(t)
@@ -19,7 +21,7 @@ func TestEmployeeRepository_Create(t *testing.T) {
 
 func TestEmployeeRepository_FindByCompany(t *testing.T) {
 	db, teardown := sqlstore.TestDB(t, databaseURL)
-	defer teardown("companies", "departments", "employees", "passports")
+	defer teardown("companies", "departments", "employees")
 
 	s := sqlstore.New(db)
 	companyID := 1

@@ -8,8 +8,8 @@ var (
 	phones           = []string{"1232", "4563", "7891", "1344", "2568", "9760"}
 	types            = []string{"A", "C", "C", "B", "B", "B"}
 	numbers          = []string{"7891", "1344", "9760", "2568", "1232", "4563"}
-	departmentNames  = []string{"Отдел №1", "Отдел №2", "Отдел №3", "Отдел №4", "Отдел №5", "Отдел №6"}
-	departmentPhones = []string{"1111", "2222", "3333", "4444", "5555", "6666"}
+	departmentNames  = []string{"Отдел №1", "Отдел №2", "Отдел №1", "Отдел №4", "Отдел №5", "Отдел №6"}
+	departmentPhones = []string{"1111", "2222", "3333", "1111", "5555", "6666"}
 )
 
 func TestEmployee(t *testing.T) *Employee {

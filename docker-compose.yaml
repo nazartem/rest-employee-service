@@ -1,25 +1,44 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  db:
+  postgres:
+    container_name: postgres
     image: postgres
-    restart: on-failure
+    restart: always
     build:
       dockerfile: db.Dockerfile
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
     volumes:
       - .:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
+    networks:
+      - backend
   api:
     build: .
+    container_name: project
+    restart: always
     ports:
       - 8080:8080
     environment:
       - PORT=8080
-      - DATABASE_URL=db
+      - DATABASE_URL=postgres
+    networks:
+      - backend
     depends_on:
-      - db
+      - postgres
+  migrate:
+    image: migrate/migrate
+    depends_on:
+      - postgres
+    volumes:
+      - path/to/you/migration/folder/in/local/computer:/database
+    # here instead of localhost as the host we use databaseservicename as that is the name we gave to the postgres service
+    command:
+      [ "-path", "/database", "-database",  "postgres://databaseusername:databasepassword@databaseservicename:5432/database?sslmode=disable", "up" ]
+
+networks:
+  backend:

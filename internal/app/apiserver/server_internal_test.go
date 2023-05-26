@@ -33,7 +33,7 @@ func TestServer_HandleEmployeeCreate(t *testing.T) {
 			payload: map[string]interface{}{
 				"name":       "Андрей",
 				"surname":    "Андреев",
-				"phone":      "+123456",
+				"phone":      "123456",
 				"companyID":  1,
 				"passport":   Passport{Type: "multi", Number: "4442"},
 				"department": Department{Name: "Отдел №45", Phone: "99-99"},

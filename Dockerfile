@@ -11,4 +11,4 @@ RUN go build -v ./cmd/apiserver
 
 EXPOSE 8080
 
-CMD [ "/app/main" ]
+CMD [ "/app/apiserver" ]
