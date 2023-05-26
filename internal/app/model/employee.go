@@ -10,7 +10,7 @@ type Employee struct {
 	Name      string `json:"name"`
 	Surname   string `json:"surname"`
 	Phone     string `json:"phone"`
-	CompanyID int    `json:"companyID"`
+	CompanyID int    `json:"company_id"`
 	Passport  struct {
 		Type   string
 		Number string

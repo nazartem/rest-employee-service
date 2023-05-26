@@ -2,6 +2,7 @@ package teststore
 
 import (
 	"employee-service/internal/app/model"
+	"fmt"
 )
 
 type EmployeeRepository struct {
@@ -17,15 +18,48 @@ func (r *EmployeeRepository) Create(e *model.Employee) error {
 }
 
 func (r *EmployeeRepository) FindByCompany(companyID int) ([]*model.Employee, error) {
-	employess := make([]*model.Employee, 0)
+	employees := make([]*model.Employee, 0)
 
 	for surname := range r.employees {
 		if r.employees[surname].CompanyID == companyID {
-			employess = append(employess, r.employees[surname])
+			employees = append(employees, r.employees[surname])
 		}
 	}
 
-	return employess, nil
+	return employees, nil
+}
+
+func (r *EmployeeRepository) FindByDepartment(companyID int, department string) ([]*model.Employee, error) {
+	employees := make([]*model.Employee, 0)
+
+	for surname := range r.employees {
+		if r.employees[surname].CompanyID == companyID && r.employees[surname].Department.Name == department {
+			employees = append(employees, r.employees[surname])
+		}
+	}
+
+	return employees, nil
+}
+
+func (r *EmployeeRepository) FindById(id int) (*model.Employee, error) {
+	for surname := range r.employees {
+		if r.employees[surname].ID == id {
+			return r.employees[surname], nil
+		}
+	}
+
+	return nil, fmt.Errorf("no content")
+}
+
+func (r *EmployeeRepository) PartiallyUpdate(id int, e *model.Employee) error {
+	for surname := range r.employees {
+		if r.employees[surname].ID == id {
+			r.employees[surname] = e
+			return nil
+		}
+	}
+
+	return fmt.Errorf("no content")
 }
 
 func (r *EmployeeRepository) Delete(id int) error {

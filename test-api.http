@@ -1,0 +1,66 @@
+### Get employee by companyID
+
+GET http://localhost:8080/company/1/
+Content-Type: application/json
+
+### Get employee by department
+
+GET http://localhost:8080/company/1/department/abcd/
+Content-Type: application/json
+
+### Create employee
+
+POST http://localhost:8080/employee
+Content-Type: application/json
+
+{
+  "name":"Naruto",
+  "surname":"Uzumaki",
+  "phone":"79370000",
+  "companyID":3,
+  "passport": {
+    "type":"C",
+    "number":"2424"
+  },
+  "department": {
+    "name":"Отдел №3",
+    "phone":"2222"
+  }
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}
+
+### Update employee
+
+PATCH http://localhost:8080/employee/1/
+Content-Type: application/json
+
+{
+  "name": "Oleg",
+  "surname":"Jojo",
+  "phone": "79564321",
+  "passport": {
+    "number":"4545"
+  }
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+### Delete employee
+
+DELETE http://localhost:8080/employee/1/
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}

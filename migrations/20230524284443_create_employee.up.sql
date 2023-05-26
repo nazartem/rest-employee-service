@@ -4,11 +4,11 @@ CREATE TABLE employees
     name      varchar not null,
     surname   varchar not null,
     phone     varchar not null unique,
-    companyId INT,
-    passportId INT,
-    departmentId INT,
+    company_id INT,
+    passport_type varchar not null,
+    passport_number varchar not null unique,
+    department_id INT,
 
-    CONSTRAINT companyId FOREIGN KEY (companyId) REFERENCES public.companies (id),
-    CONSTRAINT passportId FOREIGN KEY (passportId) REFERENCES public.passports (id),
-    CONSTRAINT departmentId FOREIGN KEY (departmentId) REFERENCES public.departments (id)
+    CONSTRAINT company_id FOREIGN KEY (company_id) REFERENCES public.companies (id),
+    CONSTRAINT department_id FOREIGN KEY (department_id) REFERENCES public.departments (id)
 );

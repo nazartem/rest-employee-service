@@ -45,15 +45,14 @@ func TestServer_HandleEmployeeCreate(t *testing.T) {
 			payload:      "invalid",
 			expectedCode: http.StatusBadRequest,
 		},
-		// TODO валидация параметров, проверка на их отсутсвие
 		{
 			name: "invalid params",
 			payload: map[string]interface{}{
-				"surname":    "Андреев",
-				"phone":      "+123456",
+				"surname":    " Андреев@",
+				"phone":      "abc",
 				"companyID":  1,
-				"passport":   Passport{Type: "multi", Number: "4442"},
-				"department": Department{Name: "Отдел №45", Phone: "99-99"},
+				"passport":   Passport{Type: "multi", Number: "abc"},
+				"department": Department{Name: "Отдел №45", Phone: "abc"},
 			},
 			expectedCode: http.StatusUnprocessableEntity,
 		},

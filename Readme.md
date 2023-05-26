@@ -1,4 +1,12 @@
-Поднять postgres в Docker:
+# Web-Сервис сотрудников
+
+* POST   /employee :  добавление сотрудника
+* DELETE /employee/{id} :  удаление сотрудника по его id
+* GET    /company/{id}     :  вывод списĸа сотрудников для указанной компании
+* GET    /company/{id}/department/{name} :  вывод списĸа сотрудников для указанного отдела компании
+* PATCH  /employee/{id} :  редаĸтирование сотрудника по его ID
+
+Пример команды для запуска контейнера с postgres в Docker:
 ```bash
 docker run --name postges -p 5432:5432 -e POSTGRES_PASSWORD=root -e POSTGRES_USER=root -d postgres:14
 ```
@@ -7,7 +15,8 @@ docker run --name postges -p 5432:5432 -e POSTGRES_PASSWORD=root -e POSTGRES_USE
 migrate -path migrations -database "postgres://root:root@localhost/postgres?sslmode=disable" up
 migrate -path migrations -database "postgres://root:root@localhost/postgres?sslmode=disable" down
 ```
-POST запроса с помощью curl:
+Запуск сервиса:
 ```bash
-curl -iL -w "\n" -X POST -H "Content-Type: application/json" --data '{"name":"Олег","description": "Лиловая, спелая, садовая", "price":41.3, "amount":27}' 127.0.0.1:8080/employee
+docker-compose -f docker-compose.yaml up --no-start
+docker-compose -f docker-compose.yaml start
 ```
